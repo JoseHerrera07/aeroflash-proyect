@@ -1,0 +1,37 @@
+# terraform.tfvars.example
+# Archivo de ejemplo - COPIAR como terraform.tfvars y personalizar
+
+# CONFIGURACIÓN GENERAL
+project_name = "flight-booking"
+environment  = "dev"
+aws_region   = "us-east-1"
+owner        = "DevOps Team"
+
+# SEGURIDAD
+my_ip    = "0.0.0.0/0"  # CAMBIAR por tu IP real
+key_name = "flight-booking-key"
+
+# EC2
+ec2_instance_type    = "t2.micro"
+ec2_ami              = "ami-0c02fb55b34d4e326"
+ec2_root_volume_size = 20
+ec2_root_volume_type = "gp3"
+
+# RDS
+rds_instance_class          = "db.t3.micro"
+rds_allocated_storage       = 20
+rds_engine_version          = "15.4"
+rds_database_name           = "flightbookingdb"
+rds_username                = "admin"
+rds_backup_retention_period = 7
+rds_maintenance_window      = "sun:03:00-sun:04:00"
+rds_backup_window           = "02:00-03:00"
+rds_skip_final_snapshot     = true
+
+# S3
+s3_versioning_enabled  = true
+s3_encryption_enabled  = true
+s3_lifecycle_enabled   = false
+s3_transition_days     = 90
+s3_expiration_days     = 365
+s3_block_public_access = false

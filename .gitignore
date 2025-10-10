@@ -1,0 +1,56 @@
+# .gitignore
+# Archivos que NO deben subirse a Git
+
+# ARCHIVOS SENSIBLES
+*.pem
+*.key
+*.ppk
+terraform.tfstate
+terraform.tfstate.*
+terraform.tfstate.backup
+*.tfvars
+!terraform.tfvars.example
+.aws/
+*.credentials
+
+# ARCHIVOS TEMPORALES DE TERRAFORM
+.terraform/
+.terraform.lock.hcl
+*.tfplan
+*.tfplan.json
+crash.log
+crash.*.log
+
+# ARCHIVOS DEL SISTEMA OPERATIVO
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*~
+.directory
+
+# EDITORES E IDEs
+.vscode/
+*.code-workspace
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*.swn
+
+# ARCHIVOS DE RESPALDO
+*.backup
+*.bak
+*.tmp
+*.temp
+*.log
+logs/
+*.zip
+*.tar.gz
+*.rar
+.env
+.env.local
