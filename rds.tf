@@ -60,7 +60,7 @@ resource "aws_db_instance" "main" {
 }
 
 resource "aws_secretsmanager_secret" "rds_password" {
-  name        = "${local.name_prefix}-rds-password"
+  name        = "${local.name_prefix}-rds-password-${random_id.bucket_suffix.hex}"
   description = "Contraseña para la base de datos RDS PostgreSQL"
   
   tags = {

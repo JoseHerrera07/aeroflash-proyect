@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: flight-booking-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://flightadmin:39o$)fi&GWZ}3vPB@flight-booking-dev-rds.c0nm044sky2r.us-east-1.rds.amazonaws.com:5432/flightbookingdb
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: flight-booking-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

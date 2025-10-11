@@ -1,6 +1,6 @@
 # 🛫 Flight Booking System - Infraestructura AWS
 
-Infraestructura completa en AWS usando Terraform para un sistema web de gestión y reserva de vuelos.
+Mi Infraestructura para un Sistema WEB de Gestión y Reserva de Vuelos.
 
 ## 📋 Contenido
 
