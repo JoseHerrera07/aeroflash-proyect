@@ -1,0 +1,107 @@
+<div class="bookings-page">
+  <div class="container">
+    <div class="header-section">
+      <h1>📋 My Bookings</h1>
+      
+      <div class="search-box">
+        <input 
+          type="email" 
+          [(ngModel)]="searchEmail" 
+          (input)="filterBookings()"
+          placeholder="Search by email..."
+          class="form-control">
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Loading bookings...</p>
+    </div>
+
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+
+    <div *ngIf="!loading && filteredBookings.length === 0" class="no-results">
+      <h2>No bookings found</h2>
+      <p>Start booking your flights today!</p>
+      <button routerLink="/flights" class="btn btn-primary">Browse Flights</button>
+    </div>
+
+    <div *ngIf="!loading && filteredBookings.length > 0" class="bookings-grid">
+      <div class="booking-card" *ngFor="let booking of filteredBookings">
+        <div class="booking-header">
+          <span class="booking-id">Booking #{{ booking.id }}</span>
+          <span class="booking-status" [ngClass]="getStatusClass(booking.status)">
+            {{ booking.status }}
+          </span>
+        </div>
+
+        <div class="flight-details">
+          <div class="flight-route">
+            <div class="route-point">
+              <div class="city">{{ booking.flight.origin }}</div>
+              <div class="time">{{ formatDate(booking.flight.departure_time) }}</div>
+            </div>
+            <div class="arrow">✈️</div>
+            <div class="route-point">
+              <div class="city">{{ booking.flight.destination }}</div>
+              <div class="time">{{ formatDate(booking.flight.arrival_time) }}</div>
+            </div>
+          </div>
+
+          <div class="flight-info">
+            <div class="info-row">
+              <span class="label">Flight:</span>
+              <span class="value">{{ booking.flight.flight_number }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Airline:</span>
+              <span class="value">{{ booking.flight.airline }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="customer-details">
+          <h4>Passenger Information</h4>
+          <div class="info-row">
+            <span class="label">Name:</span>
+            <span class="value">{{ booking.customer.name }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Email:</span>
+            <span class="value">{{ booking.customer.email }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Phone:</span>
+            <span class="value">{{ booking.customer.phone }}</span>
+          </div>
+        </div>
+
+        <div class="booking-footer">
+          <div class="booking-info">
+            <div class="info-item">
+              <span class="label">Passengers:</span>
+              <span class="value">{{ booking.passengers }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Total Price:</span>
+              <span class="value price">${{ booking.total_price }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Booked on:</span>
+              <span class="value">{{ formatDate(booking.booking_date) }}</span>
+            </div>
+          </div>
+
+          <button 
+            *ngIf="booking.status === 'confirmed'"
+            (click)="cancelBooking(booking.id!)"
+            class="btn btn-danger">
+            Cancel Booking
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

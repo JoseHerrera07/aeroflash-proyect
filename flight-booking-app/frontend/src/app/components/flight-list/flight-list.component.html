@@ -1,0 +1,89 @@
+<div class="flights-page">
+  <div class="container">
+    <div class="search-section">
+      <h1>🔍 Search Flights</h1>
+      <div class="search-form">
+        <input 
+          type="text" 
+          [(ngModel)]="searchOrigin" 
+          placeholder="From (e.g., New York)"
+          class="form-control">
+        
+        <input 
+          type="text" 
+          [(ngModel)]="searchDestination" 
+          placeholder="To (e.g., Los Angeles)"
+          class="form-control">
+        
+        <button (click)="searchFlights()" class="btn btn-primary">
+          Search
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Loading flights...</p>
+    </div>
+
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+
+    <div *ngIf="!loading && flights.length === 0" class="no-results">
+      <h2>No flights found</h2>
+      <p>Try adjusting your search criteria</p>
+    </div>
+
+    <div *ngIf="!loading && flights.length > 0" class="flights-list">
+      <h2>Available Flights ({{ flights.length }})</h2>
+      
+      <div class="flight-card" *ngFor="let flight of flights">
+        <div class="flight-header">
+          <div class="airline">
+            <span class="airline-icon">✈️</span>
+            <span class="airline-name">{{ flight.airline }}</span>
+          </div>
+          <div class="flight-number">{{ flight.flight_number }}</div>
+        </div>
+
+        <div class="flight-route">
+          <div class="route-point">
+            <div class="time">{{ formatDate(flight.departure_time) }}</div>
+            <div class="location">{{ flight.origin }}</div>
+          </div>
+
+          <div class="route-line">
+            <div class="duration">{{ calculateDuration(flight.departure_time, flight.arrival_time) }}</div>
+            <div class="line"></div>
+          </div>
+
+          <div class="route-point">
+            <div class="time">{{ formatDate(flight.arrival_time) }}</div>
+            <div class="location">{{ flight.destination }}</div>
+          </div>
+        </div>
+
+        <div class="flight-footer">
+          <div class="flight-info">
+            <div class="info-item">
+              <span class="label">Price:</span>
+              <span class="value price">${{ flight.price }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Available Seats:</span>
+              <span class="value">{{ flight.available_seats }} / {{ flight.total_seats }}</span>
+            </div>
+          </div>
+
+          <button 
+            (click)="bookFlight(flight.id!)" 
+            class="btn btn-book"
+            [disabled]="flight.available_seats === 0">
+            {{ flight.available_seats === 0 ? 'Sold Out' : 'Book Now' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

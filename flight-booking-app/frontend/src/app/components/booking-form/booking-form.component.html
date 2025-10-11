@@ -1,0 +1,133 @@
+<div class="booking-page">
+  <div class="container">
+    <div *ngIf="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Loading flight details...</p>
+    </div>
+
+    <div *ngIf="error && !flight" class="error-message">
+      {{ error }}
+      <button (click)="router.navigate(['/flights'])" class="btn btn-primary">
+        Back to Flights
+      </button>
+    </div>
+
+    <div *ngIf="!loading && flight" class="booking-container">
+      <div class="flight-summary">
+        <h2>✈️ Flight Details</h2>
+        <div class="summary-card">
+          <div class="summary-header">
+            <span class="flight-number">{{ flight.flight_number }}</span>
+            <span class="airline">{{ flight.airline }}</span>
+          </div>
+          
+          <div class="summary-route">
+            <div class="route-info">
+              <div class="city">{{ flight.origin }}</div>
+              <div class="time">{{ formatDate(flight.departure_time) }}</div>
+            </div>
+            <div class="arrow">→</div>
+            <div class="route-info">
+              <div class="city">{{ flight.destination }}</div>
+              <div class="time">{{ formatDate(flight.arrival_time) }}</div>
+            </div>
+          </div>
+
+          <div class="summary-details">
+            <div class="detail-item">
+              <span class="label">Price per passenger:</span>
+              <span class="value">${{ flight.price }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Available seats:</span>
+              <span class="value">{{ flight.available_seats }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-form-container">
+        <h2>👤 Passenger Information</h2>
+        
+        <div *ngIf="success" class="success-message">
+          ✅ Booking confirmed! Redirecting...
+        </div>
+
+        <div *ngIf="error && flight" class="error-message">
+          {{ error }}
+        </div>
+
+        <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input 
+              type="text" 
+              formControlName="name" 
+              class="form-control"
+              placeholder="John Doe">
+            <div class="error-text" *ngIf="bookingForm.get('name')?.invalid && bookingForm.get('name')?.touched">
+              Name must be at least 3 characters
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Email *</label>
+            <input 
+              type="email" 
+              formControlName="email" 
+              class="form-control"
+              placeholder="john@example.com">
+            <div class="error-text" *ngIf="bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched">
+              Please enter a valid email
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Phone *</label>
+            <input 
+              type="tel" 
+              formControlName="phone" 
+              class="form-control"
+              placeholder="+1234567890">
+            <div class="error-text" *ngIf="bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched">
+              Please enter a valid phone number
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Number of Passengers *</label>
+            <input 
+              type="number" 
+              formControlName="passengers" 
+              class="form-control"
+              min="1"
+              [max]="flight.available_seats">
+            <div class="error-text" *ngIf="bookingForm.get('passengers')?.invalid && bookingForm.get('passengers')?.touched">
+              Must be between 1 and {{ flight.available_seats }}
+            </div>
+          </div>
+
+          <div class="total-price">
+            <span class="label">Total Price:</span>
+            <span class="price">${{ totalPrice }}</span>
+          </div>
+
+          <div class="form-actions">
+            <button 
+              type="button" 
+              class="btn btn-secondary"
+              (click)="router.navigate(['/flights'])">
+              Cancel
+            </button>
+            <button 
+              type="submit" 
+              class="btn btn-primary"
+              [disabled]="bookingForm.invalid || submitting">
+              {{ submitting ? 'Processing...' : 'Confirm Booking' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
