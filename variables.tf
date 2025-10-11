@@ -27,7 +27,7 @@ variable "owner" {
 variable "my_ip" {
   description = "Tu dirección IP pública para acceso SSH (formato: x.x.x.x/32)"
   type        = string
-  default     = "0.0.0.0/0"  # CAMBIAR por tu IP real para mayor seguridad
+  default     = "0.0.0.0/0"  
 }
 
 variable "key_name" {

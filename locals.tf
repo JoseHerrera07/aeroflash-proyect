@@ -1,4 +1,4 @@
-# Define valores locales que se calculan o combinan a partir de variables
+# Definimos valores locales que se calculan o combinan a partir de variables
 
 locals {
   name_prefix = "${var.project_name}-${var.environment}"

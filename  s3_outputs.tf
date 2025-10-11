@@ -1,4 +1,3 @@
-# s3_outputs.tf
 # Outputs relacionados con S3
 
 output "s3_bucket_name" {

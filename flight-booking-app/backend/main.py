@@ -18,7 +18,7 @@ engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# ==================== MODELOS DE BASE DE DATOS ====================
+# MODELOS DE BASE DE DATOS 
 
 class Flight(Base):
     __tablename__ = "flights"
@@ -64,7 +64,7 @@ class Booking(Base):
 # Crear tablas
 Base.metadata.create_all(bind=engine)
 
-# ==================== SCHEMAS PYDANTIC ====================
+#  SCHEMAS PYDANTIC 
 
 class FlightBase(BaseModel):
     flight_number: str
@@ -130,7 +130,7 @@ class BookingDetailResponse(BaseModel):
     class Config:
         from_attributes = True
 
-# ==================== DEPENDENCY ====================
+# DEPENDENCIAS 
 
 def get_db():
     db = SessionLocal()
@@ -139,7 +139,7 @@ def get_db():
     finally:
         db.close()
 
-# ==================== FASTAPI APP ====================
+# FASTAPI APP 
 
 app = FastAPI(
     title="Flight Booking API",
@@ -156,7 +156,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ==================== ENDPOINTS ====================
+#  ENDPOINTS 
 
 @app.get("/")
 def read_root():
@@ -170,7 +170,7 @@ def read_root():
 def health_check():
     return {"status": "healthy"}
 
-# ========== FLIGHTS ==========
+#  FLIGHTS 
 
 @app.post("/flights/", response_model=FlightResponse)
 def create_flight(flight: FlightCreate, db: Session = Depends(get_db)):
@@ -228,11 +228,11 @@ def delete_flight(flight_id: int, db: Session = Depends(get_db)):
     db.commit()
     return {"message": "Flight deleted successfully"}
 
-# ========== CUSTOMERS ==========
+# CUSTOMERS 
 
 @app.post("/customers/", response_model=CustomerResponse)
 def create_customer(customer: CustomerCreate, db: Session = Depends(get_db)):
-    # Verificar si el email ya existe
+    
     existing = db.query(Customer).filter(Customer.email == customer.email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
@@ -255,7 +255,7 @@ def get_customer(customer_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Customer not found")
     return customer
 
-# ========== BOOKINGS ==========
+# BOOKINGS
 
 @app.post("/bookings/", response_model=BookingResponse)
 def create_booking(booking: BookingCreate, db: Session = Depends(get_db)):

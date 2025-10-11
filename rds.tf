@@ -1,4 +1,3 @@
-# rds.tf
 # Crea la base de datos PostgreSQL en RDS
 
 resource "random_password" "rds_password" {

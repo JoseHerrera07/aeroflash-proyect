@@ -1,4 +1,3 @@
-# s3.tf
 # Crea un bucket S3 para almacenar archivos estáticos
 
 resource "random_id" "bucket_suffix" {

@@ -1,4 +1,3 @@
-# rds_outputs.tf
 # Outputs relacionados con RDS
 
 output "rds_endpoint" {

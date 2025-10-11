@@ -1,4 +1,3 @@
-# outputs.tf
 # Outputs generales del proyecto
 
 output "infrastructure_summary" {

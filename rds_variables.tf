@@ -1,4 +1,3 @@
-# rds_variables.tf
 # Variables específicas para la base de datos RDS PostgreSQL
 
 variable "rds_instance_class" {

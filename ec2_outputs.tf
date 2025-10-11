@@ -1,4 +1,3 @@
-# ec2_outputs.tf
 # Outputs relacionados con EC2
 
 output "ec2_public_ip" {

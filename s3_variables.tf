@@ -1,4 +1,3 @@
-# s3_variables.tf
 # Variables específicas para el bucket S3
 
 variable "s3_versioning_enabled" {
