@@ -8,7 +8,7 @@ aws_region   = "us-east-1"
 owner        = "DevOps Team"
 
 # SEGURIDAD
-my_ip    = "0.0.0.0/0"  # CAMBIAR por tu IP real
+my_ip    = "0.0.0.0/0"  
 key_name = "flight-booking-key"
 
 # EC2

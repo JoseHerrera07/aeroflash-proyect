@@ -3,18 +3,46 @@ version: '3.8'
 services:
   backend:
     build: ./backend
-    container_name: flight-booking-backend
     ports:
-      - "5000:5000"
+      - "8000:8000"
+    container_name: backend_app
     environment:
-      - DATABASE_URL=postgresql://flightadmin:39o$)fi&GWZ}3vPB@flight-booking-dev-rds.c0nm044sky2r.us-east-1.rds.amazonaws.com:5432/flightbookingdb
-    restart: unless-stopped
+      - DATABASE_URL=sqlite:///./test.db
+    volumes:
+      - shared_logs:/app/logs  
 
-  frontend:
-    build: ./frontend
-    container_name: flight-booking-frontend
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - "80:80"
+      - "9090:9090"
+
+  loki:
+    image: grafana/loki:2.9.0
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail:2.9.0
+    user: "0"
+    volumes:
+      - shared_logs:/var/log/app_logs:ro  # <--- PROMTAIL LEE DE AQUÍ
+      - ./monitoring/promtail-config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
     depends_on:
-      - backend
-    restart: unless-stopped
+      - loki
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+      - loki
+
+volumes:
+  shared_logs:  # <--- El volumen mágico que comparten
