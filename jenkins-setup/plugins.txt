@@ -1,0 +1,8 @@
+configuration-as-code:latest
+git:latest
+workflow-aggregator:latest
+docker-workflow:latest
+docker-plugin:latest
+pipeline-stage-view:latest
+credentials-binding:latest
+timestamper:latest

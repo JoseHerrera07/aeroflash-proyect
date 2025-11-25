@@ -1,0 +1,21 @@
+jenkins:
+  systemMessage: "Bienvenido al CI/CD de Aeroflash"
+  numExecutors: 2
+  mode: NORMAL
+  scmCheckoutRetryCount: 2
+  labelString: "master-node"
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+       - id: "admin"
+         password: "admin"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: true
+clouds:
+  - docker:
+      name: "docker-cloud"
+      dockerApi:
+        dockerHost:
+          uri: "unix:///var/run/docker.sock"
