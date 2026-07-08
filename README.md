@@ -2,8 +2,8 @@ Sistema de Reserva de Vuelos
 
 ## 📝 Descripción del Proyecto
 
-Este es un proyecto de sistema web para gestión y reserva de vuelos desarrollado como parte de mi aprendizaje en DevOps y Cloud Computing. El sistema permite a los usuarios buscar vuelos, hacer reservas y gestionar sus bookings de manera sencilla.
-La infraestructura completa está desplegada en AWS usando Terraform para automatizar todo, y la aplicación corre en contenedores Docker. Fue todo un reto pero aprendí muchísimo en el proceso.
+Este proyecto es de un sistema web para gestión y reserva de vuelos.. El sistema permite a los usuarios buscar vuelos, hacer reservas y gestionar sus bookings de manera sencilla.
+La infraestructura completa del proyecto está desplegada en AWS usando Terraform para automatizar todo, y la aplicación corre en contenedores Docker.
 
 ---
 
